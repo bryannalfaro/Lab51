@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_comp"
+    app:startDestination="@id/principal">
+
+    <fragment
+        android:id="@+id/principal"
+        android:name="com.example.lab51.Principal.Principal"
+        android:label="Principal" >
+        <action
+            android:id="@+id/action_principal_to_preguntas"
+            app:destination="@id/preguntas" />
+        <action
+            android:id="@+id/action_principal_to_encuesta"
+            app:destination="@id/encuesta" />
+    </fragment>
+    <fragment
+        android:id="@+id/preguntas"
+        android:name="com.example.lab51.Preguntas.Preguntas"
+        android:label="Preguntas" />
+    <fragment
+        android:id="@+id/encuesta"
+        android:name="com.example.lab51.Encuesta"
+        android:label="encuesta_fragment"
+        tools:layout="@layout/encuesta_fragment" />
+    <fragment
+        android:id="@+id/about"
+        android:name="com.example.lab51.about.About"
+        android:label="About" />
+</navigation>
