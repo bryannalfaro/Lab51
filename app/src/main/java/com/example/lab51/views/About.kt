@@ -1,4 +1,4 @@
-package com.example.lab51.about
+package com.example.lab51.views
 
 
 import android.os.Bundle
@@ -9,7 +9,8 @@ import android.view.ViewGroup
 import com.example.lab51.R
 
 /**
- * A simple [Fragment] subclass.
+ * @author Bryann Alfaro
+ * Fragment that shows the About view
  */
 class About : Fragment() {
 
