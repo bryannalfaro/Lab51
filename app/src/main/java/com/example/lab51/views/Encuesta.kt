@@ -55,8 +55,10 @@ class Encuesta : Fragment() {
             if(ratingShow>=1){
                 //set the rating
                 viewModelR.endSurvey()//increment the value for the survey
-                viewModelR.rating(bindingEncuesta.ratingBar.rating)//get the rating for the ratinbar
-                viewModelR.establecerRespuesta(bindingEncuesta.ratingBar.rating.toString())//add to the list of answers
+                var rateValue=bindingEncuesta.ratingBar.rating
+
+                viewModelR.rating(rateValue)//get the rating for the ratinbar
+                viewModelR.establecerRespuesta(rateValue.toString())//add to the list of answers
 
                 //navigate to results
                 view!!.findNavController().navigate(R.id.action_encuesta_to_resultado)
@@ -67,7 +69,7 @@ class Encuesta : Fragment() {
             }
             viewModelR.establecerRespuesta(bindingEncuesta.editText2.text.toString())
             viewModel.selectPregunta()
-            bindingEncuesta.editText2.setText("")
+            bindingEncuesta.editText2.setText("")//Clean the edit text
         }
         return bindingEncuesta.root
     }
