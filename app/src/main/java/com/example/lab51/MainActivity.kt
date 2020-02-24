@@ -13,6 +13,11 @@ import com.google.android.material.navigation.NavigationView
 
 /**
  * @author Bryann Alfaro
+ * Referencias:
+ * https://classroom.udacity.com/courses/ud9012
+ * https://stackoverflow.com/questions/55307761/create-viewmodel-with-application
+ *https://www.journaldev.com/21081/android-viewmodel#android-sqlite
+ * Ayuda de: Brandon Hernandez y Andrea Amaya
  * @since 23 February 2020
  */
 

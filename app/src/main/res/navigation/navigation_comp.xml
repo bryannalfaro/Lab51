@@ -11,12 +11,10 @@
         android:label="Principal" >
         <action
             android:id="@+id/action_principal_to_preguntas"
-            app:destination="@id/preguntas"
-            app:popUpTo="@+id/principal" />
+            app:destination="@id/preguntas" />
         <action
             android:id="@+id/action_principal_to_encuesta"
-            app:destination="@id/encuesta"
-            app:popUpToInclusive="true" />
+            app:destination="@id/encuesta" />
     </fragment>
     <fragment
         android:id="@+id/preguntas"
@@ -25,8 +23,7 @@
         <action
             android:id="@+id/action_preguntas_to_principal"
             app:destination="@id/principal"
-            app:popUpTo="@+id/principal"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/encuesta"
@@ -49,9 +46,9 @@
         android:label="resultado_fragment"
         tools:layout="@layout/resultado_fragment" >
         <action
-            android:id="@+id/action_resultado_to_encuesta"
-            app:destination="@id/encuesta"
-            app:popUpTo="@+id/encuesta"
+            android:id="@+id/action_resultado_to_principal"
+            app:destination="@id/principal"
+            app:popUpTo="@+id/principal"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -13,39 +13,45 @@ class EncuestaViewModel : ViewModel() {
 
 
     private  var _pregunta=MutableLiveData<String>()
-    private var index:Int=0
+
     val preguntas:LiveData<String>
         get() = _pregunta
 
-    private lateinit var preguntasList:MutableList<String>
+    lateinit var preguntasList:MutableList<String>
+    var preguntaMade:String?=null
 
     init {
-        makePregunta()
-        selectPregunta()
         Log.i("EncuestaView","Creado View Model")
     }
 
-    private fun makePregunta(){
-        preguntasList= mutableListOf(
-            "Cual es tu opinion",
-            "Calificanos"
-        )
-    }
-     fun selectPregunta(): String {
-         if (preguntasList.getOrNull(index).isNullOrEmpty()){
-             _pregunta.value=""
-             return preguntas.toString()
-         }else{
-             _pregunta.value=preguntasList.get(index)
-             index++
-             return preguntas.toString()
+     fun makePregunta(){
+        if (preguntaMade.isNullOrEmpty()) {
+            preguntasList = mutableListOf(
+                "Cual es tu opinion",
+                "Calificanos"
+            )
 
+        }else{
+            preguntasList= mutableListOf(
+                preguntaMade.toString()
+            )
+
+            preguntasList.add("Cual es tu opinion")
+            preguntasList.add("Calificanos")
+        }
+
+
+    }
+     fun selectPregunta() {
+         if (preguntasList.isNotEmpty()){
+             _pregunta.value=preguntasList.removeAt(0)
+             Log.i("EncuestaView: ","Removido")
          }
 
     }
 
     fun addPregunta(pregunta:String){
-        preguntasList.add(pregunta)
+        preguntaMade=pregunta
     }
 
     override fun onCleared() {

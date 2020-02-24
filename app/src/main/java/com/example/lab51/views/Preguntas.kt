@@ -7,9 +7,12 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.lab51.R
 import com.example.lab51.databinding.PreguntasFragmentBinding
+import com.example.lab51.viewmodels.EncuestaViewModel
 
 /**
  * @author Bryann Alfaro
@@ -21,6 +24,7 @@ class Preguntas : Fragment() {
 
 
     var texto:String=""
+    private lateinit var viewModel: EncuestaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +49,10 @@ class Preguntas : Fragment() {
 
         val edit:EditText = view!!.findViewById(R.id.editText)
         texto=edit.text.toString()
-
+        viewModel=ViewModelProviders.of(activity!!).get(EncuestaViewModel::class.java)
+        viewModel.addPregunta(texto)
         edit.setText("")
-        var bundle= bundleOf("question" to texto)
-        view!!.findNavController().navigate(R.id.action_preguntas_to_principal,bundle)
+        view!!.findNavController().navigate(R.id.action_preguntas_to_principal)
         return super.onOptionsItemSelected(item)
     }
 }

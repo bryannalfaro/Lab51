@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.lab51.R
 import com.example.lab51.databinding.EncuestaFragmentBinding
 import com.example.lab51.viewmodels.EncuestaViewModel
+import com.example.lab51.viewmodels.ResultadoViewModel
 
 /**
  * @author Bryann Alfaro
@@ -21,7 +23,10 @@ import com.example.lab51.viewmodels.EncuestaViewModel
 @Suppress("DEPRECATION")
 class Encuesta : Fragment() {
     private lateinit var viewModel: EncuestaViewModel
+    private lateinit var viewModelR:ResultadoViewModel
     private lateinit var bindingEncuesta: EncuestaFragmentBinding
+    private var ratingShow:Int=0
+
 
 
     override fun onCreateView(
@@ -31,31 +36,38 @@ class Encuesta : Fragment() {
     ): View? {
         //inflate the view
         bindingEncuesta = DataBindingUtil.inflate(inflater, R.layout.encuesta_fragment, container, false)
-        //init the viewModel
-        viewModel = ViewModelProviders.of(this).get(EncuestaViewModel::class.java)
-        val string: String? = arguments?.getString("question")
-        if (string==null){
 
-        }else{
-            viewModel.addPregunta(string.toString())
-        }
-        //Live data for the questions
-        viewModel.preguntas.observe(this, Observer { nextQuestion ->
-            bindingEncuesta.preguntas.text = nextQuestion.toString()
-            if (nextQuestion.toString() == "Calificanos") {
-                bindingEncuesta.editText2.visibility = View.GONE
-                bindingEncuesta.ratingBar.visibility = View.VISIBLE
-            } else if (nextQuestion.toString() == "") {
-                view!!.findNavController().navigate(R.id.action_encuesta_to_resultado)
-            }else{
-                bindingEncuesta.editText2.visibility = View.VISIBLE
-                bindingEncuesta.ratingBar.visibility = View.GONE
-            }
-        })
+        //init the viewModel
+        viewModel = ViewModelProviders.of(activity!!).get(EncuestaViewModel::class.java)
+        viewModelR=ViewModelProviders.of(activity!!).get(ResultadoViewModel::class.java)
+        bindingEncuesta.encuestaModel=viewModel
+
+
+        bindingEncuesta.lifecycleOwner=viewLifecycleOwner
+
+        //Init the info in the view
+        viewModel.makePregunta()
+        viewModel.selectPregunta()
+
         //next question
         bindingEncuesta.button2.setOnClickListener {
 
+            if(ratingShow>=1){
+                //set the rating
+                viewModelR.endSurvey()//increment the value for the survey
+                viewModelR.rating(bindingEncuesta.ratingBar.rating)//get the rating for the ratinbar
+                viewModelR.establecerRespuesta(bindingEncuesta.ratingBar.rating.toString())//add to the list of answers
+
+                //navigate to results
+                view!!.findNavController().navigate(R.id.action_encuesta_to_resultado)
+            }else if(viewModel.preguntasList.size<=1){
+                ratingShow=1
+                bindingEncuesta.ratingBar.visibility=View.VISIBLE
+                bindingEncuesta.editText2.visibility=View.GONE
+            }
+            viewModelR.establecerRespuesta(bindingEncuesta.editText2.text.toString())
             viewModel.selectPregunta()
+            bindingEncuesta.editText2.setText("")
         }
         return bindingEncuesta.root
     }
